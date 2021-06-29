@@ -2,6 +2,7 @@ package main
 
 import (
 	"GolangTrick/Compare"
+	"GolangTrick/Middle"
 	"fmt"
 )
 
@@ -29,10 +30,44 @@ func TestFunctional(){
 	}
 	fmt.Println("src: ",src)
 }
+func TestReduce(){
+	square := func(x int) int{
+		return x*x
+	}
+	nums:=[]int{1,2,4,5}
+	res:=Compare.Map(nums,square)
+	fmt.Println("res : ",res)
+
+	type Employee struct {
+		Name     string
+		Age      int
+		Vacation int
+		Salary   int
+	}
+	var list = []Employee{
+		{"Hao", 44, 0, 8000},
+		{"Alice", 23, 5, 9000},
+		{"Mike", 32, 8, 4000},
+	}
+	old := func(e Employee) bool {
+		return e.Age > 40
+	}
+	res=Compare.Map(list,old)
+
+	fmt.Printf("old people: %d\n", res)
+
+}
+
+func TestRedis(){
+	Middle.RedisPrac()
+}
 func main(){
 	//TestCompare()
 	//TestInterface()
 	//TestComplete()
-	TestFunctional()
+	//TestFunctional()
+	//TestReduce()
+	TestRedis()
 }
+
 
