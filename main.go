@@ -3,6 +3,7 @@ package main
 import (
 	"GolangTrick/Compare"
 	"GolangTrick/Middle"
+	"GolangTrick/tric"
 	"fmt"
 )
 
@@ -61,13 +62,19 @@ func TestReduce(){
 func TestRedis(){
 	Middle.RedisPrac()
 }
+func TestReflect(){
+	tric.AllTypes()
+}
 func main(){
 	//TestCompare()
 	//TestInterface()
 	//TestComplete()
 	//TestFunctional()
 	//TestReduce()
-	TestRedis()
+	//TestRedis()
+	//TestReflect()
+	//tric.TestInject()
+	tric.TestSyncPool()
 }
-
+//https://junedayday.github.io/categories/
 
