@@ -4,6 +4,7 @@ import (
 	"GolangTrick/Compare"
 	"GolangTrick/Middle"
 	"GolangTrick/tric"
+	"GolangTrick/tric/mytime"
 	"fmt"
 )
 
@@ -74,7 +75,8 @@ func main(){
 	//TestRedis()
 	//TestReflect()
 	//tric.TestInject()
-	tric.TestSyncPool()
+	//tric.TestSyncPool()
+	mytime.TestTime()
 }
 //https://junedayday.github.io/categories/
 
