@@ -4,8 +4,8 @@ import (
 	"GolangTrick/Compare"
 	"GolangTrick/Middle"
 	"GolangTrick/tric"
-	"GolangTrick/tric/mytime"
 	"fmt"
+	"time"
 )
 
 func TestCompare(){
@@ -66,6 +66,10 @@ func TestRedis(){
 func TestReflect(){
 	tric.AllTypes()
 }
+type person struct {
+	Name string `json:"name"`
+	Age int `json:"age"`
+}
 func main(){
 	//TestCompare()
 	//TestInterface()
@@ -76,7 +80,29 @@ func main(){
 	//TestReflect()
 	//tric.TestInject()
 	//tric.TestSyncPool()
-	mytime.TestTime()
+	//mytime.TestTime()
+	var list = make([]person,0,20)
+	list = append(list, person{
+		"kimchenbin",
+		26,
+	})
+	test(&list)
+	fmt.Println("list",list)
+
+	startTime := time.Now()
+	fmt.Println(startTime)
+	time.Sleep(time.Second)
+	fmt.Println(time.Since(startTime).Nanoseconds()/time.Millisecond.Nanoseconds())
+
+
+
+}
+func test(list *[]person)  {
+	(*list)[0].Name="kim"
+	(*list) = append([]person{person{
+		"kimchenbin2",
+		27,
+	}},*list...)
 }
 //https://junedayday.github.io/categories/
 
