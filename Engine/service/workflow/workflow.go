@@ -3,32 +3,87 @@ package workflow
 import (
 	_struct "GolangTrick/Engine/struct"
 	"context"
+	"errors"
 )
+
 type WorkStepData struct {
-	Objects []_struct.Objects
+	Objects   []_struct.Objects
 	OpStreams interface{}
+	EventData _struct.EventData
 }
 
 type GoNext string
 
-type WorkStep interface {
+const (
+	GOTO_NEXT = "next"
+)
+
+type WorkSteper interface {
 	Key() string
-	Handle(context.Context,WorkStepData)(WorkStepData,error,GoNext)
+	Handle(context.Context, WorkStepData) (WorkStepData, error, GoNext)
 }
 
 type WorkFlow struct {
-	scenceWorksteps map[string][]WorkStep
-	headSteps map[string]WorkStep
+	sceneWorksteps     map[string][]WorkSteper
+	sceneWorkstepIndex map[string]map[string]int
+	headSteps          map[string]WorkSteper
 }
 
-func NewWorkflow(scenes []string) *WorkFlow {
-	wf := &WorkFlow{
-		scenceWorksteps:   make(map[string][]WorkStep),
-		headSteps:        make(map[string]WorkStep),
+func NewWorkFlow(scenes []string) *WorkFlow {
+	this := &WorkFlow{
+		make(map[string][]WorkSteper),
+		make(map[string]map[string]int),
+		make(map[string]WorkSteper),
 	}
 	for _, scene := range scenes {
-		wf.scenceWorksteps[scene] = make([]WorkStep, 0, 5)
-		wf.headSteps[scene] = nil
+		this.sceneWorksteps[scene] = make([]WorkSteper, 0, 5)
+		this.sceneWorkstepIndex[scene] = make(map[string]int)
+		this.headSteps[scene] = nil
 	}
-	return wf
+	return this
+}
+
+func (this *WorkFlow) sceneExists(scene string) bool {
+	_, ok1 := this.sceneWorksteps[scene]
+	_, ok2 := this.sceneWorkstepIndex[scene]
+	_, ok3 := this.headSteps[scene]
+	if ok1 && ok2 && ok3 {
+		return true
+	}
+	return false
+}
+
+func (this *WorkFlow) HeadStep(scene string) WorkSteper {
+	if this.sceneExists(scene) {
+		headstep, _ := this.headSteps[scene]
+		return headstep
+	}
+	return nil
+}
+
+func (this *WorkFlow) AddStep(scene string, step WorkSteper) error {
+	if this.sceneExists(scene) {
+		_, ok := this.headSteps[scene]
+		if !ok || len(this.sceneWorksteps[scene]) == 0 {
+			this.headSteps[scene] = step
+		}
+		this.sceneWorkstepIndex[scene][step.Key()] = len(this.sceneWorksteps[scene])
+		this.sceneWorksteps[scene] = append(this.sceneWorksteps[scene], step)
+		return nil
+	}
+	return errors.New("not scene")
+}
+
+func (this *WorkFlow) Next(scene string, stepKey string) WorkSteper {
+	if this.sceneExists(scene) {
+		index, ok := this.sceneWorkstepIndex[scene][stepKey]
+		if ok {
+			nextSeq := index + 1
+			if nextSeq >= len(this.sceneWorksteps[scene]) {
+				return nil
+			}
+			return this.sceneWorksteps[scene][nextSeq]
+		}
+	}
+	return nil
 }

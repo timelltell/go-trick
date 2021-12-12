@@ -5,40 +5,42 @@ import (
 	"GolangTrick/Middle"
 	"GolangTrick/tric"
 	"fmt"
+	"reflect"
+	"runtime"
 	"time"
 )
 
-func TestCompare(){
+func TestCompare() {
 	Compare.Compare()
 }
-func TestInterface(){
-	d1:=&Compare.Country{"China"}
-	d3:=Compare.Country{"USA"}
-	d2:=Compare.City{"shenzhen"}
+func TestInterface() {
+	d1 := &Compare.Country{"China"}
+	d3 := Compare.Country{"USA"}
+	d2 := Compare.City{"shenzhen"}
 	Compare.PrintStr(d1)
 	Compare.PrintStr(d2)
 	fmt.Println(d3.ToString())
 }
 
-func TestComplete(){
-	s:=Compare.Square{4}
+func TestComplete() {
+	s := Compare.Square{4}
 	fmt.Println(s.Sides())
 }
 
-func TestFunctional(){
-	src,err :=Compare.NewServer("127.0.0.1",8080,Compare.Protocol("tcp"),Compare.Timeout(123))
-	if err!=nil{
+func TestFunctional() {
+	src, err := Compare.NewServer("127.0.0.1", 8080, Compare.Protocol("tcp"), Compare.Timeout(123))
+	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("src: ",src)
+	fmt.Println("src: ", src)
 }
-func TestReduce(){
-	square := func(x int) int{
-		return x*x
+func TestReduce() {
+	square := func(x int) int {
+		return x * x
 	}
-	nums:=[]int{1,2,4,5}
-	res:=Compare.Map(nums,square)
-	fmt.Println("res : ",res)
+	nums := []int{1, 2, 4, 5}
+	res := Compare.Map(nums, square)
+	fmt.Println("res : ", res)
 
 	type Employee struct {
 		Name     string
@@ -54,23 +56,25 @@ func TestReduce(){
 	old := func(e Employee) bool {
 		return e.Age > 40
 	}
-	res=Compare.Map(list,old)
+	res = Compare.Map(list, old)
 
 	fmt.Printf("old people: %d\n", res)
 
 }
 
-func TestRedis(){
+func TestRedis() {
 	Middle.RedisPrac()
 }
-func TestReflect(){
+func TestReflect() {
 	tric.AllTypes()
 }
+
 type person struct {
 	Name string `json:"name"`
-	Age int `json:"age"`
+	Age  int    `json:"age"`
 }
-func main(){
+
+func main() {
 	//TestCompare()
 	//TestInterface()
 	//TestComplete()
@@ -81,28 +85,33 @@ func main(){
 	//tric.TestInject()
 	//tric.TestSyncPool()
 	//mytime.TestTime()
-	var list = make([]person,0,20)
+	var list = make([]person, 0, 20)
 	list = append(list, person{
 		"kimchenbin",
 		26,
 	})
+	fmt.Println("list", &list)
+	fmt.Printf("%p\n", list)
+
 	test(&list)
-	fmt.Println("list",list)
+	fmt.Println("list", &list)
+	fmt.Printf("%p\n", list)
 
 	startTime := time.Now()
 	fmt.Println(startTime)
 	time.Sleep(time.Second)
-	fmt.Println(time.Since(startTime).Nanoseconds()/time.Millisecond.Nanoseconds())
-
-
+	fmt.Println(time.Since(startTime).Nanoseconds() / time.Millisecond.Nanoseconds())
+	f := test
+	funcName := runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name()
+	fmt.Println(funcName)
 
 }
-func test(list *[]person)  {
-	(*list)[0].Name="kim"
+func test(list *[]person) {
+	(*list)[0].Name = "kim"
 	(*list) = append([]person{person{
 		"kimchenbin2",
 		27,
-	}},*list...)
+	}}, *list...)
 }
-//https://junedayday.github.io/categories/
 
+//https://junedayday.github.io/categories/
