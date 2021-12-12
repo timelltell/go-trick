@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"strconv"
+	//"strconv"
 
 	//"runtime/debug"
 	"time"
@@ -125,8 +125,7 @@ func pushEventHandler(ctx context.Context, eventData *_struct.EventData) (interf
 					//logutil.AddInfoLog(ctx, logutil.ENGINE, logutil.IDX_PUSH_EVENT_INFO, "", fmt.Sprintf("workStep=%+v", errStep.Key()))
 				}
 			}
-			if _, ok := err.(workflow.BizErr); ok {
-				logutil.AddInfoLog(ctx, logutil.ENGINE, logutil.IDX_BIZ_INFO, err.Error())
+			if _, ok := err.(workflow.WFErr); ok {
 				return nil, nil
 			}
 			return nil, err
@@ -143,5 +142,5 @@ func pushEventHandler(ctx context.Context, eventData *_struct.EventData) (interf
 		}
 	}
 
-	return workStepOut.ExtraData, err
+	return workStepOut, err
 }

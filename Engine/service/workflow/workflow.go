@@ -87,3 +87,13 @@ func (this *WorkFlow) Next(scene string, stepKey string) WorkSteper {
 	}
 	return nil
 }
+
+func (this *WorkFlow) Goto(scene string, stepKey GoNext) WorkSteper {
+	if this.sceneExists(scene) {
+		seq, ok := this.sceneWorkstepIndex[scene][string(stepKey)]
+		if ok && seq < len(this.sceneWorksteps[scene]) {
+			return this.sceneWorksteps[scene][seq]
+		}
+	}
+	return nil
+}
