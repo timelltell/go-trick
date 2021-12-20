@@ -4,10 +4,8 @@ import (
 	"GolangTrick/Compare"
 	"GolangTrick/Middle"
 	"GolangTrick/tric"
+	"GolangTrick/tric/mytime"
 	"fmt"
-	"reflect"
-	"runtime"
-	"time"
 )
 
 func TestCompare() {
@@ -85,25 +83,109 @@ func main() {
 	//tric.TestInject()
 	//tric.TestSyncPool()
 	//mytime.TestTime()
-	var list = make([]person, 0, 20)
-	list = append(list, person{
-		"kimchenbin",
-		26,
-	})
-	fmt.Println("list", &list)
-	fmt.Printf("%p\n", list)
+	//var list = make([]person, 0, 20)
+	//list = append(list, person{
+	//	"kimchenbin",
+	//	26,
+	//})
+	//fmt.Println("list", &list)
+	//fmt.Printf("%p\n", list)
+	//
+	//test(&list)
+	//fmt.Println("list", &list)
+	//fmt.Printf("%p\n", list)
+	//
+	//startTime := time.Now()
+	//fmt.Println(startTime)
+	//time.Sleep(time.Second)
+	//fmt.Println(time.Since(startTime).Nanoseconds() / time.Millisecond.Nanoseconds())
+	//f := test
+	//funcName := runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name()
+	//fmt.Println(funcName)
+	//ifData1 := 1
+	//var ifData interface{} = ifData1
+	//
+	//switch realData := ifData.(type) {
+	//case json.Number:
+	//	_, _ = realData.Float64()
+	//	fmt.Println("json number")
+	//case float64:
+	//	fmt.Println("json number4")
+	//
+	////result = realData
+	//case float32:
+	//	fmt.Println("json number1")
+	//
+	////result = float64(realData)
+	//case int:
+	//	fmt.Println("json number2")
+	//
+	////result = float64(realData)
+	//case int64:
+	//	fmt.Println("json number3")
+	//
+	////result = float64(realData)
+	//default:
+	//	fmt.Println("real ")
+	//	fmt.Println(realData)
+	//	//err = errors.New(fmt.Sprintf("%T to float64 is not support", ifData))
+	//}
 
-	test(&list)
-	fmt.Println("list", &list)
-	fmt.Printf("%p\n", list)
+	//var p person = person{
+	//	"kimchenbin",
+	//	26,
+	//}
+	//byteses, _ := json.Marshal(&p)
+	//str1 := string(byteses)
+	//_ = json.Unmarshal([]byte(str1), &p)
+	//byteses2, _ := json.Marshal(&p)
+	//str2 := string(byteses2)
+	//fmt.Println(str2)
+	//fmt.Println(str1)
+	//fmt.Println(str2 == str1)
+	//var p2 person = person{
+	//	"kimchenbin",
+	//	27,
+	//}
+	//type fa struct {
+	//	Id int
+	//	P  *person
+	//}
+	//var f1 fa = fa{
+	//	1,
+	//	&p,
+	//}
+	//var f2 fa = fa{
+	//	1,
+	//	&p2,
+	//}
+	//fmt.Println(reflect.DeepEqual(p, p2))
+	//fmt.Println(reflect.DeepEqual(&f1, &f2))
 
-	startTime := time.Now()
-	fmt.Println(startTime)
-	time.Sleep(time.Second)
-	fmt.Println(time.Since(startTime).Nanoseconds() / time.Millisecond.Nanoseconds())
-	f := test
-	funcName := runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name()
-	fmt.Println(funcName)
+	//var wg sync.WaitGroup
+	//for i := 0; i < 10; i++ {
+	//	wg.Add(1)
+	//	go func(i int) {
+	//		defer func() {
+	//			wg.Done()
+	//			err := recover()
+	//			if err != nil {
+	//				fmt.Println("err")
+	//
+	//			}
+	//		}()
+	//		if i > 8 {
+	//			return
+	//		}
+	//
+	//		fmt.Println("i: ", i)
+	//		//wg.Done()
+	//	}(i)
+	//}
+	//wg.Wait()
+	//fmt.Println("success: ")
+
+	mytime.GetOverlapDays()
 
 }
 func test(list *[]person) {

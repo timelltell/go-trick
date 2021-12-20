@@ -115,21 +115,21 @@ func pushEventHandler(ctx context.Context, eventData *_struct.EventData) (interf
 		}
 
 		workStepOut, err, gotoStep = workStep.Handle(ctx, workStepIn)
-		if err != nil {
-			errStep := es.workFlow.GotoErr(eventData.Scene, workStep.Key())
-			if errStep != nil {
-				_, errStepErr, _ := errStep.Handle(ctx, workStepOut)
-				if errStepErr != nil {
-					//logutil.AddErrorLog(ctx, logutil.ENGINE, logutil.IDX_PUSH_EVENT_STEP_FAILED, "", fmt.Sprintf("workStep=%+v||stepErr=%+v", errStep.Key(), errStepErr))
-				} else {
-					//logutil.AddInfoLog(ctx, logutil.ENGINE, logutil.IDX_PUSH_EVENT_INFO, "", fmt.Sprintf("workStep=%+v", errStep.Key()))
-				}
-			}
-			if _, ok := err.(workflow.WFErr); ok {
-				return nil, nil
-			}
-			return nil, err
-		}
+		//if err != nil {
+		//	errStep := es.workFlow.GotoErr(eventData.Scene, workStep.Key())
+		//	if errStep != nil {
+		//		_, errStepErr, _ := errStep.Handle(ctx, workStepOut)
+		//		if errStepErr != nil {
+		//			//logutil.AddErrorLog(ctx, logutil.ENGINE, logutil.IDX_PUSH_EVENT_STEP_FAILED, "", fmt.Sprintf("workStep=%+v||stepErr=%+v", errStep.Key(), errStepErr))
+		//		} else {
+		//			//logutil.AddInfoLog(ctx, logutil.ENGINE, logutil.IDX_PUSH_EVENT_INFO, "", fmt.Sprintf("workStep=%+v", errStep.Key()))
+		//		}
+		//	}
+		//	if _, ok := err.(workflow.WFErr); ok {
+		//		return nil, nil
+		//	}
+		//	return nil, err
+		//}
 
 		workStepIn = workStepOut
 		if gotoStep == workflow.GOTO_NEXT {
