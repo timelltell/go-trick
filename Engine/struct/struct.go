@@ -34,6 +34,11 @@ type Config struct {
 		EventTopic        string
 		ProxyListNum      int
 	}
+	PopeEditor struct {
+		IndexerReloadIntervalSeconds int
+		LogDir                       string
+		LogName                      string
+	}
 }
 
 var GConfig Config

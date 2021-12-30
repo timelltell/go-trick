@@ -4,7 +4,6 @@ import (
 	"GolangTrick/Compare"
 	"GolangTrick/Middle"
 	"GolangTrick/tric"
-	"GolangTrick/tric/mytime"
 	"fmt"
 )
 
@@ -185,8 +184,10 @@ func main() {
 	//wg.Wait()
 	//fmt.Println("success: ")
 
-	mytime.GetOverlapDays()
+	//mytime.GetOverlapDays()
 
+	var strlist []string
+	fmt.Println(len(strlist))
 }
 func test(list *[]person) {
 	(*list)[0].Name = "kim"
