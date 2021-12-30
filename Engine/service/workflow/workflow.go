@@ -7,7 +7,7 @@ import (
 )
 
 type WorkStepData struct {
-	Objects   []_struct.Objects
+	Objects   []_struct.Object
 	OpStreams interface{}
 	EventData _struct.EventData
 }

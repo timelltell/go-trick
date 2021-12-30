@@ -38,6 +38,8 @@ type Config struct {
 		IndexerReloadIntervalSeconds int
 		LogDir                       string
 		LogName                      string
+		IndexerMode                  string
+		IndexerFile                  string
 	}
 }
 
@@ -49,7 +51,7 @@ func InitConfig(configFilePath string) error {
 	return err
 }
 
-type Objects struct {
+type Object struct {
 	Id   int
 	Name string
 	Age  int
@@ -104,4 +106,14 @@ func NewStandardParams() *StandardParamsStruct {
 	return &StandardParamsStruct{
 		Id: constant.DEFAULT_UNSET_INT,
 	}
+}
+
+type PopeIndexerResponse struct {
+	Errcode int       `json:"errcode"`
+	Errmsg  string    `json:"errmsg"`
+	Data    []*Object `json:"data"`
+}
+
+func NewPopeIndexerResponse() *PopeIndexerResponse {
+	return &PopeIndexerResponse{}
 }

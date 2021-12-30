@@ -7,11 +7,11 @@ import (
 )
 
 type Objectfilter interface {
-	Filter(context.Context, []_struct.Objects) ([]_struct.Objects, error)
+	Filter(context.Context, []_struct.Object) ([]_struct.Object, error)
 }
 
 type Bs struct {
 	db      *dao.DB
 	filter  []Objectfilter
-	objects []_struct.Objects
+	objects []_struct.Object
 }

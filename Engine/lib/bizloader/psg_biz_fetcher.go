@@ -4,8 +4,10 @@ import (
 	"GolangTrick/Engine/dao"
 	_struct "GolangTrick/Engine/struct"
 	"context"
+	"crypto/md5"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 )
@@ -36,47 +38,52 @@ func (f *psgFetcher) fetch(ctx context.Context) error {
 	if err != nil {
 		jsonStr, _ = json.Marshal(response)
 		//logutil.AddErrorLog(ctx, logutil.MDU_BIZ_LOADER, logutil.IDX_PSG_BIZ_FAILED, err.Error(), string(jsonStr))
-		// f.addLog(jsonStr, "ERROR", "", err.Error())
 		return err
 	}
 	err = f.db.Fill(response)
 	if err != nil {
 		jsonStr, _ = json.Marshal(response)
 		//logutil.AddErrorLog(ctx, logutil.MDU_BIZ_LOADER, logutil.IDX_PSG_BIZ_FAILED, err.Error(), string(jsonStr))
-		// f.addLog(jsonStr, "ERROR", "", err.Error())
 		return err
 	}
 	jsonStr, _ = json.Marshal(response)
 	currentLoadTag := genHashTag(jsonStr)
-	if currentLoadTag != psgLatestLoadTag {
-		psgLatestLoadTag = currentLoadTag
-		//logutil.AddInfoLog(ctx, logutil.MDU_BIZ_LOADER, logutil.IDX_PSG_BIZ_FETCHER, "load success", string(jsonStr), currentLoadTag)
-	} else {
-		//logutil.AddInfoLog(ctx, logutil.MDU_BIZ_LOADER, logutil.IDX_PSG_BIZ_FETCHER, "load success", "load done", currentLoadTag)
-	}
+	//if currentLoadTag != psgLatestLoadTag {
+	//	psgLatestLoadTag = currentLoadTag
+	//logutil.AddInfoLog(ctx, logutil.MDU_BIZ_LOADER, logutil.IDX_PSG_BIZ_FETCHER, "load success", string(jsonStr), currentLoadTag)
+	//} else {
+	//logutil.AddInfoLog(ctx, logutil.MDU_BIZ_LOADER, logutil.IDX_PSG_BIZ_FETCHER, "load success", "load done", currentLoadTag)
+	//}
+	fmt.Println(currentLoadTag)
 	return nil
 }
 
-func (f *psgFetcher) load(ctx context.Context, mode string) (*pope_engine_editor.PopeIndexerResponse, error) {
+func genHashTag(data []byte) string {
+	hash := md5.New()
+	hash.Write(data)
+	return fmt.Sprintf("%x", hash.Sum(nil))
+}
+
+func (f *psgFetcher) load(ctx context.Context, mode string) (*_struct.PopeIndexerResponse, error) {
 	switch mode {
 	case "file": // 文件模式
 		data, err := f.loadFromFile()
 		if err != nil {
 			return nil, err
 		}
-		response := pope_engine_editor.NewPopeIndexerResponse()
+		response := _struct.NewPopeIndexerResponse()
 		if err := json.Unmarshal(data, response); err != nil {
 			return nil, err
 		}
 		return response, nil
 	default: // 其他模式，目前主要是uri模式
-		client, err := pope_engine_editor.NewClient(global.GetPopeEditorDisfName())
-		if err != nil {
-			return nil, err
-		}
-		return client.GetCanvasIndexer(ctx)
+		//client, err := _struct.NewClient(global.GetPopeEditorDisfName())
+		//if err != nil {
+		//	return nil, err
+		//}
+		//return client.GetCanvasIndexer(ctx)
 	}
-	return nil, errors.New(ERR_INDEXER_MODE_NO_MATCH)
+	return nil, errors.New("err_indexer_mode_no_match")
 }
 
 func (f *psgFetcher) loadFromFile() ([]byte, error) {

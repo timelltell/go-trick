@@ -88,3 +88,29 @@ func (l *BizLoader) getTask(s int) (taskIf, error) {
 		return nil, errors.New("err_task_sign_not_found")
 	}
 }
+
+func (l *BizLoader) Serv() error {
+	l.listen()
+	l.pick()
+	return nil
+}
+
+func (l *BizLoader) listen() error {
+	for _, listener := range l.listeners {
+		go listener.listen()
+	}
+	return nil
+}
+
+func (l *BizLoader) pick() error {
+	go func() {
+		for {
+			select {
+			case s := <-l.queue:
+				go l.runTask(s)
+			}
+		}
+	}()
+
+	return nil
+}
