@@ -77,6 +77,7 @@ type ReqDataer interface {
 type EventData struct {
 	Id         int64
 	Scene      string
+	Age        int
 	CanvasInfo map[int][]int
 }
 

@@ -61,8 +61,8 @@ func (this *EngineServer) loadStreaming() {
 }
 
 func (this *EngineServer) loadPsgProcess() error {
-	//flowDiversonWorkStep := &wss.FlowDiversionWorkstep{}
-	//this.workFlow.AddStep(constant.SCENE_PASSENGER, flowDiversonWorkStep)
+	flowDiversonWorkStep := &wss.FlowDiversionWorkstep{}
+	this.workFlow.AddStep(constant.SCENE_PASSENGER, flowDiversonWorkStep)
 	//
 	//canvasFilterWorkStep := &wss.CanvasFilterWorkStep{}
 	//this.workFlow.AddStep(constant.SCENE_PASSENGER, canvasFilterWorkStep)

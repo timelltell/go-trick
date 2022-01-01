@@ -42,6 +42,29 @@ func (d *DB) GetObjects() ([]_struct.Object, error) {
 	return realObjects, nil
 }
 
+func (d *DB) GetObjectAgeById(id int) (*_struct.Object, error) {
+	objectsFromMemory, err := d.ObjectManager.getObjectById(id)
+	if err != nil {
+		return nil, err
+	}
+	return objectsFromMemory, nil
+}
+
+func (d *DB) GetObjectByAge(age int) ([]_struct.Object, error) {
+	objectsFromMemory, err := d.ObjectManager.getObjects()
+
+	if err != nil {
+		return nil, err
+	}
+	realObjects := make([]_struct.Object, 0, 100)
+	for _, objectFromMemory := range objectsFromMemory {
+		if objectFromMemory.Age == age {
+			realObjects = append(realObjects, *objectFromMemory)
+		}
+	}
+	return realObjects, nil
+}
+
 func (d *DB) Fill(apiRepData *_struct.PopeIndexerResponse) error {
 	if apiRepData.Errcode != 0 {
 		return errors.New("err")
