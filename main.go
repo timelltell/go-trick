@@ -6,7 +6,6 @@ import (
 	"GolangTrick/tric"
 	"GolangTrick/tric/mytime"
 	"fmt"
-	"time"
 )
 
 func TestCompare() {
@@ -186,8 +185,7 @@ func main() {
 	//wg.Wait()
 	//fmt.Println("success: ")
 
-	mytime.GetOverlapDays()
-	fmt.Println(mytime.GetDateTimeByTimeUnix(time.Now().Unix()))
+	fmt.Println(mytime.CompareTwoDateTime("2022-01-04 20:11:49", "2022-01-03 20:11:49"))
 
 }
 func test(list *[]person) {

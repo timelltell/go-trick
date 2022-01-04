@@ -88,3 +88,10 @@ func GetMinInGroup(args ...int64) (int64, error) {
 	}
 	return res, nil
 }
+func CompareTwoDateTime(date1 string, date2 string) bool {
+	time1, _ := time.Parse(dateFormat, date1)
+	fmt.Println(time1.Unix())
+	time2, _ := time.Parse(dateFormat, date2)
+	fmt.Println(time2.Unix())
+	return time1.Unix() > time2.Unix()
+}
