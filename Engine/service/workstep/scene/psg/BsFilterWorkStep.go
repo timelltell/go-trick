@@ -1,13 +1,32 @@
-package scene
+package psg
 
 import (
 	"GolangTrick/Engine/dao"
+	"GolangTrick/Engine/service/workflow"
 	"GolangTrick/Engine/service/workstep/common"
 	"GolangTrick/Engine/service/workstep/common/psg"
 	_struct "GolangTrick/Engine/struct"
+	"context"
 	"errors"
-	"golang.org/x/net/context"
 )
+
+type BsFilterWorkStep struct {
+}
+
+func (this *BsFilterWorkStep) Key() string {
+	return "BSFilter"
+}
+
+func (this *BsFilterWorkStep) Handle(ctx context.Context, in workflow.WorkStepData) (workflow.WorkStepData, error, string) {
+	out := in
+	canvases, err := FilterByBS(ctx, in.EventData)
+	if err != nil {
+		return out, errors.New("next"), workflow.GOTO_NEXT
+	}
+	out.Objects = canvases
+
+	return out, nil, workflow.GOTO_NEXT
+}
 
 func GenCommonBSInstance(ctx context.Context, bsInstance *common.Bs, eventData _struct.EventData) {
 	bsInstance.SetSourceObjects(ctx, nil)

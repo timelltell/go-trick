@@ -20,7 +20,7 @@ const (
 
 type WorkSteper interface {
 	Key() string
-	Handle(context.Context, WorkStepData) (WorkStepData, error, GoNext)
+	Handle(context.Context, WorkStepData) (WorkStepData, error, string)
 }
 
 type WorkFlow struct {

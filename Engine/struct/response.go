@@ -14,3 +14,13 @@ type RespData struct {
 	Id   int64
 	Resp *Response
 }
+
+type FeatureValType int64
+
+// Attributes:
+//  - Val
+//  - Type
+type FeatureVal struct {
+	Val  string         `thrift:"val,1,required" json:"val"`
+	Type FeatureValType `thrift:"type,2,required" json:"type"`
+}

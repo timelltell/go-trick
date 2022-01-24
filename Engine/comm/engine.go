@@ -3,6 +3,7 @@ package comm
 import (
 	"GolangTrick/Engine/constant"
 	"GolangTrick/Engine/service/workFlow"
+	"GolangTrick/Engine/service/workstep/scene/psg"
 	_struct "GolangTrick/Engine/struct"
 	"errors"
 	"fmt"
@@ -61,19 +62,19 @@ func (this *EngineServer) loadStreaming() {
 }
 
 func (this *EngineServer) loadPsgProcess() error {
-	flowDiversonWorkStep := &wss.FlowDiversionWorkstep{}
+	flowDiversonWorkStep := &psg.BsFilterWorkStep{}
 	this.workFlow.AddStep(constant.SCENE_PASSENGER, flowDiversonWorkStep)
 	//
 	//canvasFilterWorkStep := &wss.CanvasFilterWorkStep{}
 	//this.workFlow.AddStep(constant.SCENE_PASSENGER, canvasFilterWorkStep)
 	//
-	//stepFilterWorkstep := &wss.StepFilterWorkstep{}
-	//this.workFlow.AddStep(constant.SCENE_PASSENGER, stepFilterWorkstep)
+	stepFilterWorkstep := &psg.StepFilterWorkstep{}
+	this.workFlow.AddStep(constant.SCENE_PASSENGER, stepFilterWorkstep)
 	//
 	//// 风控拦截过滤
 	//this.workFlow.AddStep(constant.SCENE_PASSENGER, &wss.RiskControlWorkstep{})
 	//
-	//this.workFlow.AddStep(constant.SCENE_PASSENGER, &wss.PriorityCheckWorkstep{})
+	//this.workFlow.AddStep(constant.SCENE_PASSENGER, &psg.PriorityCheckWorkstep{})
 	//
 	////	ActionRunner失败时进行重试
 	//actionRunnerWorkstep := &wss.ActionRunnerWorkstep{}
