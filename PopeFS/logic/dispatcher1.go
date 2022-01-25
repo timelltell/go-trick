@@ -59,16 +59,13 @@ func Dispatch(ctx context.Context, featureList []string, params map[string]strin
 	// 1. 找不到的放到 notInConfigList
 	// 1. 若 CanBeMerged = true，合并到 requestGroupMap[APIName+Domain+Protocol]，否则直接放到 requestList
 	var groupDataErr *errutil.ErrorInfo
-	logger.Debugf(ctx, logger.DLTagUndefined, "feature list is %v", featureList)
 	for _, featureName := range featureList {
 		metaData, getMetaErr := config.GetFeatureMeta(featureName)
 		if getMetaErr != nil {
-			logger.Debugf(ctx, logger.DLTagUndefined, "###not in config map metaData ###")
 			notInConfigList = append(notInConfigList, featureName)
 			groupDataErr = errutil.New(errutil.ErrnoPartlySuccess, getMetaErr.Error())
 			continue
 		}
-		logger.Debugf(ctx, logger.DLTagUndefined, "meta data is %#v\n", metaData)
 
 		if !metaData.CanBeMerged {
 			singleFeatureGroup := featureRequest{
@@ -96,8 +93,6 @@ func Dispatch(ctx context.Context, featureList []string, params map[string]strin
 			}
 		}
 	}
-
-	logger.Debugf(ctx, logger.DLTagUndefined, "#### %#v ####", requestList)
 
 	// Step-3 遍历 requestGroupMap 追加到 requestList
 	for _, req := range requestGroupMap {
