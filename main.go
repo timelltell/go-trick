@@ -4,7 +4,6 @@ import (
 	"GolangTrick/Compare"
 	"GolangTrick/Middle"
 	"GolangTrick/tric"
-	"GolangTrick/tric/mytime"
 	"fmt"
 )
 
@@ -73,6 +72,7 @@ type person struct {
 }
 
 func main() {
+	tric.Testregexp()
 	//TestCompare()
 	//TestInterface()
 	//TestComplete()
@@ -185,7 +185,7 @@ func main() {
 	//wg.Wait()
 	//fmt.Println("success: ")
 
-	fmt.Println(mytime.CompareTwoDateTime("2022-01-04 20:11:49", "2022-01-03 20:11:49"))
+	//fmt.Println(mytime.CompareTwoDateTime("2022-01-04 20:11:49", "2022-01-03 20:11:49"))
 
 }
 func test(list *[]person) {
