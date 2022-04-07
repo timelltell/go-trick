@@ -5,6 +5,7 @@ import (
 	"GolangTrick/Middle"
 	"GolangTrick/tric"
 	"fmt"
+	"strings"
 )
 
 func TestCompare() {
@@ -72,6 +73,9 @@ type person struct {
 }
 
 func main() {
+	//time.Sleep(time.Second * 3)
+
+	fmt.Println("start")
 	tric.Testregexp()
 	//TestCompare()
 	//TestInterface()
@@ -82,9 +86,15 @@ func main() {
 	//TestReflect()
 	//tric.TestInject()
 	//tric.TestSyncPool()
-	//mytime.TestTime()
-	//my_select.Test1()
+	//fmt.Println("middle")
 
+	//mytime.TestTime()
+	//fmt.Println("end")
+
+	//my_select.Test1()
+	//time.Sleep(time.Second * 100)
+
+	fmt.Println(strings.Join([]string{"1", "2"}, "?"))
 }
 func test(list *[]person) {
 	(*list)[0].Name = "kim"

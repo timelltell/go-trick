@@ -95,3 +95,11 @@ func CompareTwoDateTime(date1 string, date2 string) bool {
 	fmt.Println(time2.Unix())
 	return time1.Unix() > time2.Unix()
 }
+
+//func init() {
+//	go func() {
+//		for range time.Tick(time.Second * time.Duration(1)) {
+//			fmt.Println("tick")
+//		}
+//	}()
+//}
