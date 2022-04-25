@@ -72,6 +72,7 @@ type person struct {
 }
 
 func main() {
+
 	//time.Sleep(time.Second * 3)
 
 	//fmt.Println("start")
@@ -83,9 +84,9 @@ func main() {
 	//TestReduce()
 	//TestRedis()
 	//TestReflect()
-	tric.TestInject()
-	tric.TestInject1()
-	tric.TestInject2()
+	//tric.TestInject()
+	//tric.TestInject1()
+	//tric.TestInject2()
 
 	//tric.TestSyncPool()
 	//fmt.Println("middle")
@@ -95,10 +96,29 @@ func main() {
 
 	//my_select.Test1()
 	//time.Sleep(time.Second * 100)
-	var m map[string][]int
-	m = make(map[string][]int)
-	m["a"] = []int{1, 2}
-	m["b"] = []int{3, 4}
+
+	ch := make(chan *int, 2)
+	l := make([]int, 0, 2)
+	l = append(l, 1)
+	l = append(l, 2)
+	//var a int = 3
+	for index, tmp := range l {
+		fmt.Printf("%p\n", &tmp)
+		fmt.Printf("%p\n", &l[index])
+		test4(&l[index], ch)
+	}
+	fmt.Println("ch")
+	for i := range ch {
+		fmt.Println(*i)
+	}
+}
+
+func test4(i *int, ch chan<- *int) (res string) {
+	fmt.Printf("%p\n", i)
+
+	fmt.Println(*i)
+	ch <- i
+	return res
 }
 
 //func test2(m interface{}) {
@@ -109,6 +129,14 @@ func main() {
 //		fmt.Println(v)
 //	}
 //}
+
+func test3() (res string) {
+	defer func() {
+		res = "2"
+	}()
+	res = "1"
+	return res
+}
 
 func test(list *[]person) {
 	(*list)[0].Name = "kim"
