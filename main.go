@@ -4,6 +4,7 @@ import (
 	"GolangTrick/Compare"
 	"GolangTrick/Middle"
 	"GolangTrick/tric"
+	"errors"
 	"fmt"
 )
 
@@ -113,6 +114,11 @@ func main() {
 	//}
 
 	functest()
+	err := errors.New("")
+	if err != nil {
+		fmt.Println("yes")
+
+	}
 }
 
 func test4(i *int, ch chan<- *int) (res string) {
