@@ -3,7 +3,6 @@ package main
 import (
 	"GolangTrick/Compare"
 	"GolangTrick/Middle"
-	"GolangTrick/tric"
 	"errors"
 	"fmt"
 )
@@ -63,9 +62,6 @@ func TestReduce() {
 func TestRedis() {
 	Middle.RedisPrac()
 }
-func TestReflect() {
-	tric.AllTypes()
-}
 
 type person struct {
 	Name string `json:"name"`
@@ -74,46 +70,9 @@ type person struct {
 
 func main() {
 
-	//time.Sleep(time.Second * 3)
-
-	//fmt.Println("start")
-	//tric.Testregexp()
-	//TestCompare()
-	//TestInterface()
-	//TestComplete()
-	//TestFunctional()
-	//TestReduce()
-	//TestRedis()
-	//TestReflect()
-	//tric.TestInject()
-	//tric.TestInject1()
-	//tric.TestInject2()
-
-	//tric.TestSyncPool()
-	//fmt.Println("middle")
-
-	//mytime.TestTime()
-	//fmt.Println("end")
-
-	//my_select.Test1()
-	//time.Sleep(time.Second * 100)
-
-	//ch := make(chan *int, 2)
-	//l := make([]int, 0, 2)
-	//l = append(l, 1)
-	//l = append(l, 2)
-	////var a int = 3
-	//for index, tmp := range l {
-	//	fmt.Printf("%p\n", &tmp)
-	//	fmt.Printf("%p\n", &l[index])
-	//	test4(&l[index], ch)
-	//}
-	//fmt.Println("ch")
-	//for i := range ch {
-	//	fmt.Println(*i)
-	//}
-
-	functest()
+	i := functest()
+	fmt.Println("i")
+	fmt.Println(i)
 	err := errors.New("")
 	if err != nil {
 		fmt.Println("yes")
@@ -170,11 +129,23 @@ type ResProcessLimitDto struct {
 
 type LimitStrategyType int
 
-func functest() {
-	fmt.Println("a")
-	fmt.Println(LimitStrategy0)
-	fmt.Println("b")
-	fmt.Println(LimitStrategy1)
+func functest() (status int) {
+	defer func() {
+		fmt.Println(status)
+	}()
+	ch := make(chan int, 3)
+	ch <- 1
+	ch <- 2
+	ch <- 3
+	close(ch)
+	for tmp := range ch {
+		fmt.Println(tmp)
+	}
+	//fmt.Println("a")
+	//fmt.Println(LimitStrategy0)
+	//fmt.Println("b")
+	//fmt.Println(LimitStrategy1)
+	return -1
 }
 
 func funa() {
