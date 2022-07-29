@@ -1,4 +1,4 @@
-package tric
+package my_trick
 
 import "fmt"
 
